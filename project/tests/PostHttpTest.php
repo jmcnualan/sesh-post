@@ -151,12 +151,21 @@ class PostHttpTest extends TestCase
 
         $this->json('POST', 'post/', $payload);
 
-        $this->assertResponseStatus(204);
+        $this->assertResponseStatus(201);
 
         $this->seeInDatabase(
             (new Post())->getTable(),
             $payload
         );
+
+        $this->response->assertJsonStructure(['data' => [
+            'id',
+            'title',
+            'content',
+            'is_published',
+            'created_at',
+        ]]);
+
         Event::assertDispatched(PostWasCreated::class);
     }
 }
