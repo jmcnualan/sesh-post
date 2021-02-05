@@ -38,6 +38,6 @@ jobs:
         project/vendor/bin/phpunit -c project/phpunit.xml  --coverage-clover coverage.xml
     - name: Upload reports to codecov
       run: |
-        ls -la
+        ls -la ./project
         export CODECOV_TOKEN="${{ secrets.CODECOV_TOKEN }}"
         bash <(curl -s https://codecov.io/bash)
