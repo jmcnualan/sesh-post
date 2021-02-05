@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Tests\Testcase;
+use Tests\TestCase;
 
 class MigrationTest extends TestCase
 {
