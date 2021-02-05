@@ -19,4 +19,15 @@ class MigrationTest extends TestCase
         $this->artisan('db:seed');
         $this->assertTrue(true);
     }
+
+    /**
+     * @test
+     * @testdox Some shit
+     *
+     * @return void
+     */
+    public function function(): void
+    {
+        $this->assertTrue(false);
+    }
 }
