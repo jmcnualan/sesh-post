@@ -1,0 +1,43 @@
+name: Develop testing
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: nanasess/setup-php@master
+      with:
+        php-version: '7.4'
+
+    - name: Validate composer.json and composer.lock
+      run: |
+        cd project
+        composer validate
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: project/vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+    - name: Install dependencies
+      if: steps.composer-cache.outputs.cache-hit != 'true'
+      run: |
+        cd project
+        composer install --prefer-dist --no-progress
+    - name: Execute tests (Unit and Feature tests) via PHPUnit
+      run: |
+        cd project
+        vendor/bin/phpunit --coverage-clover coverage.xml
+    - name: Upload reports to codecov
+      run: |
+        export CODECOV_TOKEN="${{ secrets.CODECOV_TOKEN }}"
+        bash <(curl -s https://codecov.io/bash)
