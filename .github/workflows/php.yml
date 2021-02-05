@@ -36,7 +36,7 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: |
         cd project
-        vendor/bin/phpunit --coverage-clover ../coverage.xml
+        vendor/bin/phpunit --coverage-clover phpunit-coverage.xml
     - name: Upload reports to codecov
       run: |
         cd project
