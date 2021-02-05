@@ -36,9 +36,10 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: |
         cd project
-        vendor/bin/phpunit --coverage-clover phpunit-coverage.xml
+        vendor/bin/phpunit --coverage-clover coverage.xml
     - name: Upload reports to codecov
       run: |
         cd project
+        echo ${{ secrets.CODECOV_TOKEN }}
         export CODECOV_TOKEN="${{ secrets.CODECOV_TOKEN }}"
         bash <(curl -s https://codecov.io/bash)
