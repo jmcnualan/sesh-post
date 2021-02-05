@@ -41,17 +41,17 @@ class PostController extends Controller
     /**
      * Create
      *
-     * @return Response
+     * @return ResourcesPost
      */
-    public function store(Request $request): Response
+    public function store(Request $request): ResourcesPost
     {
         $payload = $this->createPayload($request);
 
         $job = new CreatePost($payload);
 
-        dispatch($job);
+        $post = dispatch_now($job);
 
-        return response('', 204);
+        return new ResourcesPost($post);
     }
 
     /**
