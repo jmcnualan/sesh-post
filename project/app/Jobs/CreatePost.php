@@ -29,5 +29,7 @@ class CreatePost extends Job
         $post = Post::create($this->payload);
 
         event(new PostWasCreated($post));
+
+        return $post;
     }
 }
